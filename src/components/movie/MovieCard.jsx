@@ -2,18 +2,17 @@ import React from 'react'
 
 const MovieCard = ({ item }) => {
   const { title, release_date, poster_path, vote_average } = item
-  console.log(item)
   return (
-    <div className="movie-card flex flex-col rounded-lg p-3 bg-slate-800 text-white h-full select-none">
+    <div className="flex flex-col h-full p-3 text-white rounded-lg select-none movie-card bg-slate-800">
       <img className="w-full h-[250px] object-cover rounded-lg mb-5" src={poster_path ? `https://image.tmdb.org/t/p/w500${poster_path}` : 'https://placehold.co/600x400/png'} alt={title} />
 
       <div className="flex flex-col flex-1">
-        <h3 className="text-xl font-bold mb-3">{title}</h3>
-        <div className="flex items-center justify-between text-sm opacity-50 mb-10">
+        <h3 className="mb-3 text-xl font-bold">{title}</h3>
+        <div className="flex items-center justify-between mb-10 text-sm opacity-50">
           <span>{new Date(release_date).getFullYear()}</span>
           <span>{vote_average}</span>
         </div>
-        <button className="w-full py-3 px-6 rounded-lg capitalize bg-primary mt-auto">Watch Now</button>
+        <button className="w-full px-6 py-3 mt-auto capitalize rounded-lg bg-primary">Watch Now</button>
       </div>
     </div>
   )

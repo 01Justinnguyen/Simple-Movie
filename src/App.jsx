@@ -4,6 +4,7 @@ import Main from './components/layout/Main'
 import HomePage from './pages/HomePage'
 import Banner from './components/banner/BannerList'
 import MoviesPage from './pages/MoviesPage'
+import MovieDetailPage from './components/movie/MovieDetailPage'
 function App() {
   return (
     <>
@@ -18,6 +19,7 @@ function App() {
               </>
             }></Route>
           <Route path="/movies" element={<MoviesPage />}></Route>
+          <Route path="/movie/:movieId" element={<MovieDetailPage />}></Route>
         </Route>
       </Routes>
     </>

@@ -1,7 +1,9 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 
 const MovieCard = ({ item }) => {
-  const { title, release_date, poster_path, vote_average, name, first_air_date } = item
+  const { title, release_date, poster_path, vote_average, name, first_air_date, id } = item
+  const navigate = useNavigate()
   return (
     <div className="flex flex-col h-full p-3 text-white rounded-lg select-none movie-card bg-slate-800">
       <img className="w-full h-[250px] object-cover rounded-lg mb-5" src={poster_path ? `https://image.tmdb.org/t/p/w500${poster_path}` : 'https://placehold.co/600x400/png'} alt={title} />
@@ -17,7 +19,9 @@ const MovieCard = ({ item }) => {
             </svg>
           </span>
         </div>
-        <button className="w-full px-6 py-3 mt-auto capitalize rounded-lg bg-primary">Watch Now</button>
+        <button onClick={() => navigate(`/movie/${id}`)} className="w-full px-6 py-3 mt-auto capitalize rounded-lg bg-primary">
+          Watch Now
+        </button>
       </div>
     </div>
   )

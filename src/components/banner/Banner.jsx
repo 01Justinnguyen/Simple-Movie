@@ -5,7 +5,7 @@ const Banner = ({ banner }) => {
   console.log(banner)
   return (
     <div className="relative w-full h-full rounded-lg">
-      <div className="overlay absolute inset-0 bg-gradient-to-t from-[rgba(0,0,0,0.5)] to-[rgba(0,0,0,0.5)] rounded-lg"></div>
+      <div className="overlay"></div>
       <img className="object-cover object-top w-full h-full rounded-lg" src={backdrop_path ? `https://image.tmdb.org/t/p/w500${backdrop_path}` : 'https://placehold.co/600x400/png'} alt={title} />
       <div className="absolute w-full text-white left-5 bottom-5">
         <h2 className="mb-5 text-3xl font-bold">{title}</h2>

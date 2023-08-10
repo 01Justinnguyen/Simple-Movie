@@ -5,7 +5,6 @@ function MovieTrailer({ movieId }) {
   if (!data) return null
   const { results } = data
   if (!results && results.length <= 0) return null
-  console.log(results)
   return (
     <div className="py-10">
       <div className="flex flex-col gap-10">

@@ -4,6 +4,7 @@ import useSWR from 'swr'
 import { fetcher } from '../../config'
 import MovieCredits from './MovieCredits'
 import MovieTrailer from './MovieTrailer'
+import SimilarMovies from './SimilarMovies'
 
 const MovieDetailPage = () => {
   const { movieId } = useParams()
@@ -12,10 +13,7 @@ const MovieDetailPage = () => {
   useEffect(() => {
     if (data) setMovieDetail(data)
   }, [data])
-
   const { poster_path, title, backdrop_path, genres, overview } = movieDetail
-
-  console.log(movieDetail)
 
   return (
     <div className="pb-10">
@@ -27,6 +25,7 @@ const MovieDetailPage = () => {
             backgroundImage: `url(https://image.tmdb.org/t/p/original${backdrop_path})`
           }}></div>
       </div>
+
       <div className="w-full h-[400px] max-w-[800px] mx-auto -mt-[200px] relative z-10 pb-10">
         <img className="object-cover w-full h-full rounded-xl" src={`https://image.tmdb.org/t/p/original${poster_path}`} alt={title} />
       </div>
@@ -44,6 +43,7 @@ const MovieDetailPage = () => {
       <p className="text-center leading-relaxed max-w-[600px] mx-auto mb-10">{overview}</p>
       <MovieCredits movieId={movieId} />
       <MovieTrailer movieId={movieId} />
+      <SimilarMovies movieId={movieId} />
     </div>
   )
 }

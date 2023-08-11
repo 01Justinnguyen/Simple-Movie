@@ -11,7 +11,7 @@ const MovieCard = ({ item }) => {
       <div className="flex flex-col flex-1">
         <h3 className="mb-3 text-xl font-bold">{title || name}</h3>
         <div className="flex items-center justify-between mb-10 text-sm opacity-50">
-          <span>{new Date(release_date || first_air_date).getFullYear()}</span>
+          <span>{new Date(release_date || first_air_date).getFullYear() || null}</span>
           <span className="flex items-center gap-x-1">
             {vote_average.toFixed(1)}
             <svg width="13" height="14" viewBox="0 0 9 9" fill="none" xmlns="http://www.w3.org/2000/svg">

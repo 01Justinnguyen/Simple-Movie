@@ -1,23 +1,31 @@
 import React, { useEffect, useState } from 'react'
 import MovieList from '../components/movie/MovieList'
 import useSWR from 'swr'
-import { fetcher } from '../config'
+import { fetcher, API_KEY } from '../config'
 import MovieCard from '../components/movie/MovieCard'
+import debounce from 'lodash.debounce'
 const MoviesPage = () => {
   const [movies, setMovies] = useState([])
-  const { data } = useSWR(`https://api.themoviedb.org/3/trending/all/day?api_key=5e6b78a5f9690b9cb75bb71bb40ab0b4`, fetcher)
-
+  const [inputValue, setInputValue] = useState('')
+  const [url, setUrl] = useState(`https://api.themoviedb.org/3/trending/all/day?api_key=${API_KEY}`)
+  const { data } = useSWR(url, fetcher)
   useEffect(() => {
     if (data && data.results) setMovies(data?.results)
   }, [data])
-
-  console.log(data)
-
+  const handleInputChange = (e) => setInputValue(e.target.value)
+  const setFilterDebounce = debounce(handleInputChange, 500)
+  useEffect(() => {
+    if (inputValue) {
+      setUrl(`https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${inputValue}`)
+    } else {
+      setUrl(`https://api.themoviedb.org/3/trending/all/day?api_key=${API_KEY}`)
+    }
+  }, [inputValue])
   return (
     <div className="py-10">
       <div className="flex mb-10 max-w-[1000px] mx-auto">
         <div className="flex-1">
-          <input type="text" className="w-full p-4 text-white outline-none bg-slate-800" placeholder="Type here to search..." />
+          <input type="text" className="w-full p-4 text-white outline-none bg-slate-800" placeholder="Type here to search..." onChange={setFilterDebounce} />
         </div>
         <button className="p-4 text-white bg-primary">
           <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">

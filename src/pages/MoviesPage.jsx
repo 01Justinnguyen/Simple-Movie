@@ -4,25 +4,32 @@ import useSWR from 'swr'
 import { fetcher, API_KEY } from '../config'
 import MovieCard from '../components/movie/MovieCard'
 import debounce from 'lodash.debounce'
+const pageCount = 5
 const MoviesPage = () => {
+  const [page, setPage] = useState(1)
+  const [nextPage, setNextPage] = useState(4)
   const [isLoading, setIsLoading] = useState(true)
   const [movies, setMovies] = useState([])
   const [inputValue, setInputValue] = useState('')
-  const [url, setUrl] = useState(`https://api.themoviedb.org/3/trending/all/day?api_key=${API_KEY}`)
+  const [url, setUrl] = useState(`https://api.themoviedb.org/3/trending/all/day?api_key=${API_KEY}&page=${nextPage}`)
   const { data } = useSWR(url, fetcher)
+
   useEffect(() => {
     if (data && data.results) setMovies(data?.results)
-    // setIsLoading(false)
+    // if (data && data.total_pages) setPage(data?.total_pages)
+    setIsLoading(false)
   }, [data])
+
   const handleInputChange = (e) => setInputValue(e.target.value)
   const setFilterDebounce = debounce(handleInputChange, 500)
   useEffect(() => {
     if (inputValue) {
-      setUrl(`https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${inputValue}`)
+      setUrl(`https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${inputValue}&page=${nextPage}`)
     } else {
-      setUrl(`https://api.themoviedb.org/3/trending/all/day?api_key=${API_KEY}`)
+      setUrl(`https://api.themoviedb.org/3/trending/all/day?api_key=${API_KEY}&page=${nextPage}`)
     }
-  }, [inputValue])
+  }, [inputValue, nextPage])
+
   return (
     <div className="py-10">
       <div className="flex mb-10 max-w-[1000px] mx-auto">
@@ -37,13 +44,34 @@ const MoviesPage = () => {
       </div>
       <div className="grid grid-cols-4 gap-10">{movies.length > 0 && movies.map((movie) => <MovieCard isLoading={isLoading} key={movie.id} item={movie}></MovieCard>)}</div>
       <div className="flex items-center justify-center mt-10 gap-x-5">
-        <span>
+        <button
+          onClick={() => {
+            console.log(nextPage)
+            setNextPage(nextPage - 1)
+          }}
+          disabled={nextPage <= 0}>
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6 cursor-pointer">
             <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
           </svg>
-        </span>
-        <span className="inline-block px-3 py-2 leading-none bg-white rounded cursor-pointer text-slate-900">1</span>
-        <span>
+        </button>
+
+        {new Array(pageCount).fill(0).map((item, index) => (
+          <span
+            key={index}
+            onClick={() => {
+              console.log(index + 1)
+              setNextPage(index + 1)
+            }}
+            className="inline-block px-3 py-2 leading-none bg-white rounded cursor-pointer text-slate-900">
+            {index + 1}
+          </span>
+        ))}
+
+        <span
+          onClick={() => {
+            console.log(nextPage)
+            setNextPage(nextPage + 1)
+          }}>
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6 cursor-pointer">
             <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
           </svg>

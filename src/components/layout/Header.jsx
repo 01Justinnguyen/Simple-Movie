@@ -8,7 +8,7 @@ const Header = () => {
           Home
         </NavLink>
         <NavLink to={'/movies'} className={({ isActive }) => (isActive ? 'text-primary' : '')}>
-          Movie
+          Movies
         </NavLink>
       </header>
     </>

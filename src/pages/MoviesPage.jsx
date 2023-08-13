@@ -5,18 +5,22 @@ import { fetcher, API_KEY } from '../config'
 import MovieCard from '../components/movie/MovieCard'
 import debounce from 'lodash.debounce'
 const pageCount = 5
+const itemsPerPage = 20
+import ReactPaginate from 'react-paginate'
 const MoviesPage = () => {
   const [page, setPage] = useState(1)
-  const [nextPage, setNextPage] = useState(4)
   const [isLoading, setIsLoading] = useState(true)
   const [movies, setMovies] = useState([])
+  const [totalPages, setTotalPages] = useState(1)
   const [inputValue, setInputValue] = useState('')
-  const [url, setUrl] = useState(`https://api.themoviedb.org/3/trending/all/day?api_key=${API_KEY}&page=${nextPage}`)
+  const [itemOffset, setItemOffset] = useState(0)
+  const [url, setUrl] = useState(`https://api.themoviedb.org/3/trending/all/day?api_key=${API_KEY}&page=${page}`)
   const { data } = useSWR(url, fetcher)
 
   useEffect(() => {
     if (data && data.results) setMovies(data?.results)
-    // if (data && data.total_pages) setPage(data?.total_pages)
+    if (data && data.total_pages) setTotalPages(data?.total_pages)
+    if (data && data.page) setPage(data?.page)
     setIsLoading(false)
   }, [data])
 
@@ -24,12 +28,19 @@ const MoviesPage = () => {
   const setFilterDebounce = debounce(handleInputChange, 500)
   useEffect(() => {
     if (inputValue) {
-      setUrl(`https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${inputValue}&page=${nextPage}`)
+      setUrl(`https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${inputValue}&page=${page}`)
     } else {
-      setUrl(`https://api.themoviedb.org/3/trending/all/day?api_key=${API_KEY}&page=${nextPage}`)
+      setUrl(`https://api.themoviedb.org/3/trending/all/day?api_key=${API_KEY}&page=${page}`)
     }
-  }, [inputValue, nextPage])
+  }, [inputValue, page])
 
+  const pageCount = Math.ceil(totalPages / itemsPerPage)
+  // Invoke when user click to request another page.
+  const handlePageClick = (event) => {
+    const newOffset = (event.selected * itemsPerPage) % totalPages
+    setItemOffset(newOffset)
+    setPage(event.selected + 1)
+  }
   return (
     <div className="py-10">
       <div className="flex mb-10 max-w-[1000px] mx-auto">
@@ -43,7 +54,11 @@ const MoviesPage = () => {
         </button>
       </div>
       <div className="grid grid-cols-4 gap-10">{movies.length > 0 && movies.map((movie) => <MovieCard isLoading={isLoading} key={movie.id} item={movie}></MovieCard>)}</div>
-      <div className="flex items-center justify-center mt-10 gap-x-5">
+      <div className="mt10">
+        <ReactPaginate breakLabel="..." nextLabel="next >" onPageChange={handlePageClick} pageRangeDisplayed={5} pageCount={pageCount} previousLabel="< previous" renderOnZeroPageCount={null} />
+      </div>
+
+      {/* <div className="flex items-center justify-center hidden mt-10 gap-x-5">
         <button
           onClick={() => {
             console.log(nextPage)
@@ -56,15 +71,15 @@ const MoviesPage = () => {
         </button>
 
         {new Array(pageCount).fill(0).map((item, index) => (
-          <span
+          <button
+            disabled={nextPage >= 1000}
             key={index}
             onClick={() => {
-              console.log(index + 1)
               setNextPage(index + 1)
             }}
             className="inline-block px-3 py-2 leading-none bg-white rounded cursor-pointer text-slate-900">
             {index + 1}
-          </span>
+          </button>
         ))}
 
         <span
@@ -76,7 +91,7 @@ const MoviesPage = () => {
             <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
           </svg>
         </span>
-      </div>
+      </div> */}
     </div>
   )
 }

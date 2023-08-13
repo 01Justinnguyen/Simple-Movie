@@ -4,8 +4,6 @@ import useSWR from 'swr'
 import { fetcher, API_KEY } from '../config'
 import MovieCard from '../components/movie/MovieCard'
 import debounce from 'lodash.debounce'
-const pageCount = 5
-const itemsPerPage = 20
 import ReactPaginate from 'react-paginate'
 const MoviesPage = () => {
   const [page, setPage] = useState(1)
@@ -13,7 +11,7 @@ const MoviesPage = () => {
   const [movies, setMovies] = useState([])
   const [totalPages, setTotalPages] = useState(1)
   const [inputValue, setInputValue] = useState('')
-  const [itemOffset, setItemOffset] = useState(0)
+  // const [itemOffset, setItemOffset] = useState(0)
   const [url, setUrl] = useState(`https://api.themoviedb.org/3/trending/all/day?api_key=${API_KEY}&page=${page}`)
   const { data } = useSWR(url, fetcher)
 
@@ -21,6 +19,7 @@ const MoviesPage = () => {
     if (data && data.results) setMovies(data?.results)
     if (data && data.total_pages) setTotalPages(data?.total_pages)
     if (data && data.page) setPage(data?.page)
+    console.log(data)
     setIsLoading(false)
   }, [data])
 
@@ -34,11 +33,9 @@ const MoviesPage = () => {
     }
   }, [inputValue, page])
 
-  const pageCount = Math.ceil(totalPages / itemsPerPage)
+  const pageCount = Number.parseInt(totalPages)
   // Invoke when user click to request another page.
   const handlePageClick = (event) => {
-    const newOffset = (event.selected * itemsPerPage) % totalPages
-    setItemOffset(newOffset)
     setPage(event.selected + 1)
   }
   return (
@@ -54,8 +51,17 @@ const MoviesPage = () => {
         </button>
       </div>
       <div className="grid grid-cols-4 gap-10">{movies.length > 0 && movies.map((movie) => <MovieCard isLoading={isLoading} key={movie.id} item={movie}></MovieCard>)}</div>
-      <div className="mt10">
-        <ReactPaginate breakLabel="..." nextLabel="next >" onPageChange={handlePageClick} pageRangeDisplayed={5} pageCount={pageCount} previousLabel="< previous" renderOnZeroPageCount={null} />
+      <div className="mt-10">
+        <ReactPaginate
+          breakLabel="..."
+          nextLabel="next >"
+          onPageChange={handlePageClick}
+          pageRangeDisplayed={5}
+          pageCount={pageCount}
+          previousLabel="< previous"
+          renderOnZeroPageCount={null}
+          className="pagination"
+        />
       </div>
 
       {/* <div className="flex items-center justify-center hidden mt-10 gap-x-5">

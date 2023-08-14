@@ -1,7 +1,7 @@
 import useSWR from 'swr'
-import { fetcher, API_KEY } from '../../config'
+import { fetcher, tmdbAPI } from '../../config'
 function MovieTrailer({ movieId }) {
-  const { data } = useSWR(`https://api.themoviedb.org/3/movie/${movieId}/videos?api_key=${API_KEY}`, fetcher)
+  const { data } = useSWR(tmdbAPI.getMovieMeta(movieId, 'videos'), fetcher)
   if (!data) return null
   const { results } = data
   if (!results && results.length <= 0) return null

@@ -19,7 +19,6 @@ const MoviesPage = () => {
     if (data && data.results) setMovies(data?.results)
     if (data && data.total_pages) setTotalPages(data?.total_pages)
     if (data && data.page) setPage(data?.page)
-    console.log(data)
     setIsLoading(false)
   }, [data])
 
@@ -63,41 +62,6 @@ const MoviesPage = () => {
           className="pagination"
         />
       </div>
-
-      {/* <div className="flex items-center justify-center hidden mt-10 gap-x-5">
-        <button
-          onClick={() => {
-            console.log(nextPage)
-            setNextPage(nextPage - 1)
-          }}
-          disabled={nextPage <= 0}>
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6 cursor-pointer">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
-          </svg>
-        </button>
-
-        {new Array(pageCount).fill(0).map((item, index) => (
-          <button
-            disabled={nextPage >= 1000}
-            key={index}
-            onClick={() => {
-              setNextPage(index + 1)
-            }}
-            className="inline-block px-3 py-2 leading-none bg-white rounded cursor-pointer text-slate-900">
-            {index + 1}
-          </button>
-        ))}
-
-        <span
-          onClick={() => {
-            console.log(nextPage)
-            setNextPage(nextPage + 1)
-          }}>
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6 cursor-pointer">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
-          </svg>
-        </span>
-      </div> */}
     </div>
   )
 }

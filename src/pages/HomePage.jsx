@@ -1,4 +1,4 @@
-import React from 'react'
+import {} from 'react'
 import MovieList from '../components/movie/MovieList'
 const HomePage = () => {
   return (

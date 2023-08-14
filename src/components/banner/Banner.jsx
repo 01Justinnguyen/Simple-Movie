@@ -1,8 +1,12 @@
 import React from 'react'
+import Button from '../button/Button'
+import { useNavigate } from 'react-router-dom'
 
 const Banner = ({ banner }) => {
-  const { title, backdrop_path } = banner
-  console.log(banner)
+  const { title, backdrop_path, id } = banner
+
+  console.log('Banner', banner)
+  const navigate = useNavigate()
   return (
     <div className="relative w-full h-full rounded-lg">
       <div className="overlay"></div>
@@ -14,7 +18,9 @@ const Banner = ({ banner }) => {
           <span className="px-4 py-2 transition-all border border-white rounded-md cursor-pointer hover:bg-primary">Adventure</span>
           <span className="px-4 py-2 transition-all border border-white rounded-md cursor-pointer hover:bg-primary">Adventure</span>
         </div>
-        <button className="px-6 py-3 font-medium text-white rounded-lg bg-primary">Watch Now</button>
+        <Button className={'w-auto'} onClick={() => navigate(`/movie/${id}`)}>
+          Watch Now
+        </Button>
       </div>
     </div>
   )

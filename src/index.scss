@@ -36,6 +36,6 @@
     @apply text-primary;
   }
   li {
-    @apply select-none px-2 rounded-full border border-gray-500 leading-normal hover:bg-primary hover:text-white transition-all cursor-pointer;
+    @apply flex items-center select-none px-2 rounded-full border border-gray-500 leading-normal hover:bg-primary hover:text-white transition-all cursor-pointer;
   }
 }

@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import Skeleton from 'react-loading-skeleton'
 import { useNavigate } from 'react-router-dom'
+import Button from '../button/Button'
 const MovieCard = ({ item, isLoading }) => {
   const { title, release_date, poster_path, vote_average, name, first_air_date, id } = item
   const navigate = useNavigate()
@@ -28,13 +29,7 @@ const MovieCard = ({ item, isLoading }) => {
             </span>
           </div>
         )}
-        {isLoading ? (
-          <Skeleton className="w-full px-6 py-3" />
-        ) : (
-          <button onClick={() => navigate(`/movie/${id}`)} className="w-full px-6 py-3 mt-auto capitalize rounded-lg bg-primary">
-            Watch Now
-          </button>
-        )}
+        {isLoading ? <Skeleton className="w-full px-6 py-3" /> : <Button onClick={() => navigate(`/movie/${id}`)}>Watch Now</Button>}
       </div>
     </div>
   )

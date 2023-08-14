@@ -1,7 +1,7 @@
 import useSWR from 'swr'
-import { fetcher } from '../../config'
+import { fetcher, tmdbAPI } from '../../config'
 function MovieCredits({ movieId }) {
-  const { data } = useSWR(`https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=5e6b78a5f9690b9cb75bb71bb40ab0b4`, fetcher)
+  const { data } = useSWR(tmdbAPI.getMovieMeta(movieId, 'credits'), fetcher)
   if (!data) return null
   const { cast } = data
   if (!cast || cast.length <= 0) return null
@@ -11,7 +11,11 @@ function MovieCredits({ movieId }) {
       <div className="grid grid-cols-4 gap-5">
         {cast.slice(0, 4).map((item) => (
           <div className="cast-item" key={item.id}>
-            <img src={`https://image.tmdb.org/t/p/original${item.profile_path}`} className="w-full h-[350px] object-cover rounded-lg mb-3" alt="" />
+            <img
+              src={item.profile_path ? tmdbAPI.imageOriginal(item.profile_path) : 'https://img.freepik.com/premium-vector/gray-avatar-icon-vector-illustration_276184-163.jpg?w=740'}
+              className="w-full h-[350px] object-cover rounded-lg mb-3"
+              alt=""
+            />
             <h3 className="text-xl font-medium">{item.name}</h3>
           </div>
         ))}

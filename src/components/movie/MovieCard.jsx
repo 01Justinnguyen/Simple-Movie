@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
+import {} from 'react'
 import Skeleton from 'react-loading-skeleton'
 import { useNavigate } from 'react-router-dom'
+import { tmdbAPI } from '../../config'
 import Button from '../button/Button'
 const MovieCard = ({ item, isLoading }) => {
   const { title, release_date, poster_path, vote_average, name, first_air_date, id } = item
@@ -10,7 +11,7 @@ const MovieCard = ({ item, isLoading }) => {
       {isLoading ? (
         <Skeleton className="w-full mb-5" height={250} />
       ) : (
-        <img className="w-full h-[250px] object-cover rounded-lg mb-5" src={poster_path ? `https://image.tmdb.org/t/p/w500${poster_path}` : 'https://placehold.co/600x400/png'} alt={title} />
+        <img className="w-full h-[250px] object-cover rounded-lg mb-5" src={poster_path ? tmdbAPI.image500(poster_path) : 'https://placehold.co/600x400/png'} alt={title} />
       )}
 
       <div className="flex flex-col flex-1">

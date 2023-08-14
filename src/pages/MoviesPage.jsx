@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react'
-import MovieList from '../components/movie/MovieList'
+import { useEffect, useState } from 'react'
 import useSWR from 'swr'
-import { fetcher, API_KEY } from '../config'
-import MovieCard from '../components/movie/MovieCard'
+import { fetcher, tmdbAPI } from 'apiConfig/config'
+import MovieCard from 'components/movie/MovieCard'
 import debounce from 'lodash.debounce'
 import ReactPaginate from 'react-paginate'
 const MoviesPage = () => {
@@ -12,7 +11,7 @@ const MoviesPage = () => {
   const [totalPages, setTotalPages] = useState(1)
   const [inputValue, setInputValue] = useState('')
   // const [itemOffset, setItemOffset] = useState(0)
-  const [url, setUrl] = useState(`https://api.themoviedb.org/3/trending/all/day?api_key=${API_KEY}&page=${page}`)
+  const [url, setUrl] = useState(tmdbAPI.getTrendingMovies(page))
   const { data } = useSWR(url, fetcher)
 
   useEffect(() => {
@@ -26,9 +25,9 @@ const MoviesPage = () => {
   const setFilterDebounce = debounce(handleInputChange, 500)
   useEffect(() => {
     if (inputValue) {
-      setUrl(`https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${inputValue}&page=${page}`)
+      setUrl(tmdbAPI.getMoviesSearch(inputValue, page))
     } else {
-      setUrl(`https://api.themoviedb.org/3/trending/all/day?api_key=${API_KEY}&page=${page}`)
+      setUrl(tmdbAPI.getTrendingMovies(page))
     }
   }, [inputValue, page])
 

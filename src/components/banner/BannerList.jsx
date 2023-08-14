@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import useSWR from 'swr'
-import { fetcher } from '../../config'
+import { fetcher } from 'apiConfig/config'
 import Banner from './Banner'
 import { SwiperSlide, Swiper } from 'swiper/react'
 import { Pagination, Autoplay } from 'swiper/modules'

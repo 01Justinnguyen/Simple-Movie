@@ -1,7 +1,7 @@
 import {} from 'react'
 import Skeleton from 'react-loading-skeleton'
 import { useNavigate } from 'react-router-dom'
-import { tmdbAPI } from '../../config'
+import { tmdbAPI } from 'apiConfig/config'
 import Button from '../button/Button'
 const MovieCard = ({ item, isLoading }) => {
   const { title, release_date, poster_path, vote_average, name, first_air_date, id } = item

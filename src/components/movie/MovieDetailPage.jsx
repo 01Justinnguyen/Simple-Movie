@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import useSWR from 'swr'
-import { fetcher, tmdbAPI } from '../../config'
+import { fetcher, tmdbAPI } from 'apiConfig/config'
 import MovieCredits from './MovieCredits'
 import MovieTrailer from './MovieTrailer'
 import SimilarMovies from './SimilarMovies'

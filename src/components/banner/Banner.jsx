@@ -1,7 +1,7 @@
 import {} from 'react'
 import Button from '../button/Button'
 import { useNavigate } from 'react-router-dom'
-import { tmdbAPI } from 'apiConfig/config'
+import { tmdbAPI } from 'src/apiConfig/config'
 
 const Banner = ({ banner }) => {
   const { title, backdrop_path, id } = banner

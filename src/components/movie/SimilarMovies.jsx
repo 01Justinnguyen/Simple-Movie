@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { SwiperSlide, Swiper } from 'swiper/react'
 import useSWR from 'swr'
-import { fetcher, tmdbAPI } from 'apiConfig/config'
+import { fetcher, tmdbAPI } from 'src/apiConfig/config'
 import MovieCard from './MovieCard'
 import { Navigation, Autoplay } from 'swiper/modules'
 const SimilarMovies = ({ movieId }) => {

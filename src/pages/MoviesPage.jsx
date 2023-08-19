@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import useSWR from 'swr'
-import { fetcher, tmdbAPI } from 'apiConfig/config'
-import MovieCard from 'components/movie/MovieCard'
+import { fetcher, tmdbAPI } from 'src/apiConfig/config'
+import MovieCard from 'src/components/movie/MovieCard'
 import debounce from 'lodash.debounce'
 import ReactPaginate from 'react-paginate'
 const MoviesPage = () => {

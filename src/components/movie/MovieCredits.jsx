@@ -1,5 +1,5 @@
 import useSWR from 'swr'
-import { fetcher, tmdbAPI } from 'apiConfig/config'
+import { tmdbAPI, fetcher } from 'src/apiConfig/config'
 function MovieCredits({ movieId }) {
   const { data } = useSWR(tmdbAPI.getMovieMeta(movieId, 'credits'), fetcher)
   if (!data) return null

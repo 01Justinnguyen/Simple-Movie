@@ -3,7 +3,7 @@ import MovieCard from './MovieCard'
 import { SwiperSlide, Swiper } from 'swiper/react'
 import { Navigation, Autoplay } from 'swiper/modules'
 import useSWR from 'swr'
-import { fetcher, tmdbAPI } from 'apiConfig/config'
+import { tmdbAPI, fetcher } from 'src/apiConfig/config'
 const MovieList = ({ type = 'now_playing' }) => {
   const [movies, setMovies] = useState([])
   const { data } = useSWR(tmdbAPI.getMovieList(type), fetcher)

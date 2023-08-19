@@ -8,5 +8,10 @@ export default defineConfig({
     proxy: {
       '/pagead': 'https://googleads.g.doubleclick.net'
     }
+  },
+  resolve: {
+    alias: {
+      src: '/src'
+    }
   }
 })

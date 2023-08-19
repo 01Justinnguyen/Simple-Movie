@@ -18,7 +18,6 @@ function MovieTrailer({ movieId }) {
                 height="491"
                 src={`https://www.youtube.com/embed/${item.key}`}
                 title={item.type}
-                frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 allowFullScreen></iframe>
             </div>

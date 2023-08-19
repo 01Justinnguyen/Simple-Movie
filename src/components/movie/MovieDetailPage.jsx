@@ -5,6 +5,7 @@ import { tmdbAPI, fetcher } from 'src/apiConfig/config'
 import MovieCredits from './MovieCredits'
 import MovieTrailer from './MovieTrailer'
 import SimilarMovies from './SimilarMovies'
+import MovieMeta from './MovieMeta'
 
 const MovieDetailPage = () => {
   const { movieId } = useParams()
@@ -41,9 +42,16 @@ const MovieDetailPage = () => {
         </div>
       )}
       <p className="text-center leading-relaxed max-w-[600px] mx-auto mb-10">{overview}</p>
-      <MovieCredits movieId={movieId} />
+
+      {/* <MovieCredits movieId={movieId} />
+
       <MovieTrailer movieId={movieId} />
-      <SimilarMovies movieId={movieId} />
+
+      <SimilarMovies movieId={movieId} /> */}
+
+      <MovieMeta movieId={movieId} type="credits" />
+      <MovieMeta movieId={movieId} type="videos" />
+      <MovieMeta movieId={movieId} type="similar" />
     </div>
   )
 }

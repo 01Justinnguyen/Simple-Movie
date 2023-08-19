@@ -17,22 +17,24 @@ const MovieDetailPage = lazy(() => import('./components/movie/MovieDetailPage'))
 function App() {
   return (
     <>
-      <SkeletonTheme baseColor="#313131" highlightColor="#525252">
-        <Routes>
-          <Route path="/" element={<Main />}>
-            <Route
-              path="/"
-              element={
-                <>
-                  <Banner />
-                  <HomePage />
-                </>
-              }></Route>
-            <Route path="/movies" element={<MoviesPage />}></Route>
-            <Route path="/movie/:movieId" element={<MovieDetailPage />}></Route>
-          </Route>
-        </Routes>
-      </SkeletonTheme>
+      <Suspense fallback={<></>}>
+        <SkeletonTheme baseColor="#313131" highlightColor="#525252">
+          <Routes>
+            <Route path="/" element={<Main />}>
+              <Route
+                path="/"
+                element={
+                  <>
+                    <Banner />
+                    <HomePage />
+                  </>
+                }></Route>
+              <Route path="/movies" element={<MoviesPage />}></Route>
+              <Route path="/movie/:movieId" element={<MovieDetailPage />}></Route>
+            </Route>
+          </Routes>
+        </SkeletonTheme>
+      </Suspense>
     </>
   )
 }

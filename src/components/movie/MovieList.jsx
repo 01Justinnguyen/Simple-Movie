@@ -6,6 +6,7 @@ import useSWR from 'swr'
 import { tmdbAPI, fetcher } from 'src/apiConfig/config'
 import PropTypes from 'prop-types'
 import { withErrorBoundary } from 'react-error-boundary'
+import MovieCardSkeleton from 'src/components/loading/MovieCardSkeleton'
 
 const MovieList = ({ type = 'now_playing' }) => {
   const [movies, setMovies] = useState([])
@@ -16,14 +17,38 @@ const MovieList = ({ type = 'now_playing' }) => {
   }, [data])
   return (
     <div className="movie-list">
-      <Swiper modules={[Navigation, Autoplay]} spaceBetween={50} slidesPerView={'auto'} navigation autoplay={{ delay: 2500, disableOnInteraction: false }}>
-        {movies.length > 0 &&
-          movies.map((movie) => (
-            <SwiperSlide key={movie.id}>
-              <MovieCard isLoading={isLoading} item={movie} />
+      {isLoading && (
+        <>
+          <Swiper modules={[Navigation, Autoplay]} spaceBetween={50} slidesPerView={'auto'} navigation autoplay={{ delay: 2500, disableOnInteraction: false }}>
+            <SwiperSlide>
+              <MovieCardSkeleton />
             </SwiperSlide>
-          ))}
-      </Swiper>
+            <SwiperSlide>
+              <MovieCardSkeleton />
+            </SwiperSlide>
+            <SwiperSlide>
+              <MovieCardSkeleton />
+            </SwiperSlide>
+            <SwiperSlide>
+              <MovieCardSkeleton />
+            </SwiperSlide>
+            <SwiperSlide>
+              <MovieCardSkeleton />
+            </SwiperSlide>
+          </Swiper>
+        </>
+      )}
+
+      {!isLoading && (
+        <Swiper modules={[Navigation, Autoplay]} spaceBetween={50} slidesPerView={'auto'} navigation autoplay={{ delay: 2500, disableOnInteraction: false }}>
+          {movies.length > 0 &&
+            movies.map((movie) => (
+              <SwiperSlide key={movie.id}>
+                <MovieCard item={movie} />
+              </SwiperSlide>
+            ))}
+        </Swiper>
+      )}
     </div>
   )
 }

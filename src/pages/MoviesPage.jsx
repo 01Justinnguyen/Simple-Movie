@@ -6,7 +6,6 @@ import debounce from 'lodash.debounce'
 import ReactPaginate from 'react-paginate'
 const MoviesPage = () => {
   const [page, setPage] = useState(1)
-  const [isLoading, setIsLoading] = useState(true)
   const [movies, setMovies] = useState([])
   const [totalPages, setTotalPages] = useState(1)
   const [inputValue, setInputValue] = useState('')
@@ -18,7 +17,6 @@ const MoviesPage = () => {
     if (data && data.results) setMovies(data?.results)
     if (data && data.total_pages) setTotalPages(data?.total_pages)
     if (data && data.page) setPage(data?.page)
-    setIsLoading(false)
   }, [data])
 
   const handleInputChange = (e) => setInputValue(e.target.value)
@@ -48,7 +46,7 @@ const MoviesPage = () => {
           </svg>
         </button>
       </div>
-      <div className="grid grid-cols-4 gap-10">{movies.length > 0 && movies.map((movie) => <MovieCard isLoading={isLoading} key={movie.id} item={movie}></MovieCard>)}</div>
+      <div className="grid grid-cols-4 gap-10">{movies.length > 0 && movies.map((movie) => <MovieCard key={movie.id} item={movie}></MovieCard>)}</div>
       <div className="mt-10">
         <ReactPaginate
           breakLabel="..."

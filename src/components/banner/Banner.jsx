@@ -1,5 +1,5 @@
 import {} from 'react'
-import Button from '../button/Button'
+import Button from 'src/components/button/Button'
 import { useNavigate } from 'react-router-dom'
 import { tmdbAPI } from 'src/apiConfig/config'
 

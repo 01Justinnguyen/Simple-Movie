@@ -1,15 +1,6 @@
-import {} from 'react'
-import Skeleton from 'react-loading-skeleton'
-import { useNavigate } from 'react-router-dom'
-import { tmdbAPI } from 'src/apiConfig/config'
-import Button from '../button/Button'
-import PropTypes from 'prop-types'
-import { withErrorBoundary } from 'react-error-boundary'
+import React from 'react'
 
-const MovieCard = ({ item, isLoading }) => {
-  console.log('isloading', isLoading)
-  const { title, release_date, poster_path, vote_average, name, first_air_date, id } = item
-  const navigate = useNavigate()
+const MovieCardSkeleton = () => {
   return (
     <div className="flex flex-col h-full p-3 text-white rounded-lg select-none movie-card bg-slate-800">
       {isLoading ? (
@@ -40,24 +31,4 @@ const MovieCard = ({ item, isLoading }) => {
   )
 }
 
-MovieCard.propTypes = {
-  item: PropTypes.shape({
-    title: PropTypes.string,
-    release_date: PropTypes.string,
-    poster_path: PropTypes.string,
-    vote_average: PropTypes.number,
-    name: PropTypes.string,
-    first_air_date: PropTypes.string,
-    id: PropTypes.number
-  }),
-  isLoading: PropTypes.bool
-}
-
-// eslint-disable-next-line react-refresh/only-export-components
-function FallbackComponent() {
-  return <p className="text-red-400 bg-red-50">Something when wrong</p>
-}
-// eslint-disable-next-line react-refresh/only-export-components
-export default withErrorBoundary(MovieCard, {
-  FallbackComponent
-})
+export default MovieCardSkeleton

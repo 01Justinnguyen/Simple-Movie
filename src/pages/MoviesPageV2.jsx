@@ -1,26 +1,29 @@
 import { useEffect, useState } from 'react'
-import useSWR from 'swr'
 import { fetcher, tmdbAPI } from 'src/apiConfig/config'
 import MovieCard from 'src/components/movie/MovieCard'
 import debounce from 'lodash.debounce'
-import ReactPaginate from 'react-paginate'
 import MovieCardSkeleton from 'src/components/loading/MovieCardSkeleton'
 import Button from 'src/components/button/Button'
+import useSWRInfinite from 'swr/infinite'
+const itemsPerPage = 20
 const MoviesPage = () => {
   const [page, setPage] = useState(1)
-  const [movies, setMovies] = useState([])
-  const [totalPages, setTotalPages] = useState(1)
   const [inputValue, setInputValue] = useState('')
   const [url, setUrl] = useState(tmdbAPI.getTrendingMovies(page))
-  const { data, error } = useSWR(url, fetcher)
+
+  //Handle load more cards
+  const { data, error, size, setSize } = useSWRInfinite((index) => url.replace('page=1', `page=${index + 1}`), fetcher)
+  const isEmpty = data?.[0]?.results.length === 0
+  const isReachingEnd = isEmpty || (data && data[data.length - 1]?.results.length < itemsPerPage)
+  console.log('🚀 ~ file: MoviesPageV2.jsx:18 ~ MoviesPage ~ isReachingEnd:', isReachingEnd)
+
+  //handle skeleton
   const isLoading = !data && !error
 
-  useEffect(() => {
-    if (data && data.results) setMovies(data?.results)
-    if (data && data.total_pages) setTotalPages(data?.total_pages)
-    if (data && data.page) setPage(data?.page)
-  }, [data])
+  //initial data
+  const movies = data ? data.reduce((a, b) => a.concat(b.results), []) : []
 
+  //Handle search input
   const handleInputChange = (e) => setInputValue(e.target.value)
   const setFilterDebounce = debounce(handleInputChange, 500)
   useEffect(() => {
@@ -30,11 +33,8 @@ const MoviesPage = () => {
       setUrl(tmdbAPI.getTrendingMovies(page))
     }
   }, [inputValue, page])
-  const pageCount = Number.parseInt(totalPages)
-  // Invoke when user click to request another page.
-  const handlePageClick = (event) => {
-    setPage(event.selected + 1)
-  }
+  //End handle search input
+
   return (
     <div className="py-10">
       <div className="flex mb-10 max-w-[1000px] mx-auto">
@@ -48,30 +48,21 @@ const MoviesPage = () => {
         </button>
       </div>
 
-      {isLoading && (
+      {/* {isLoading && (
         <div className="grid grid-cols-4 gap-10">
           {new Array(20).fill(0).map((item, id) => (
             <MovieCardSkeleton key={id} />
           ))}
         </div>
-      )}
+      )} */}
 
       {!isLoading && <div className="grid grid-cols-4 gap-10">{movies.length > 0 && movies.map((movie) => <MovieCard key={movie.id} item={movie}></MovieCard>)}</div>}
 
-      {/* Pagination */}
-      <div className="mt-10">
-        <ReactPaginate
-          breakLabel="..."
-          nextLabel="next >"
-          onPageChange={handlePageClick}
-          pageRangeDisplayed={5}
-          pageCount={pageCount}
-          previousLabel="< previous"
-          renderOnZeroPageCount={null}
-          className="pagination"
-        />
+      <div className="mt-10 text-center">
+        <Button className={isReachingEnd ? 'cursor-not-allowed bg-opacity-70' : ''} onClick={() => (isReachingEnd ? {} : setSize(size + 1))} disabled={isReachingEnd}>
+          LOAD MORE
+        </Button>
       </div>
-      {/* End Pagination */}
     </div>
   )
 }

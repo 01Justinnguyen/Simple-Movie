@@ -10,7 +10,7 @@ import Main from './components/layout/Main'
 // import MovieDetailPage from './components/movie/MovieDetailPage'
 
 const HomePage = lazy(() => import('./pages/HomePage'))
-const MoviesPage = lazy(() => import('./pages/MoviesPage'))
+const MoviesPageV2 = lazy(() => import('./pages/MoviesPageV2'))
 const Banner = lazy(() => import('./components/banner/BannerList'))
 const MovieDetailPage = lazy(() => import('./components/movie/MovieDetailPage'))
 
@@ -29,7 +29,7 @@ function App() {
                     <HomePage />
                   </>
                 }></Route>
-              <Route path="/movies" element={<MoviesPage />}></Route>
+              <Route path="/movies" element={<MoviesPageV2 />}></Route>
               <Route path="/movie/:movieId" element={<MovieDetailPage />}></Route>
             </Route>
           </Routes>

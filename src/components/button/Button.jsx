@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Button = ({ onClick, className, children, type = 'button', bgColor = 'primary', full }) => {
+const Button = ({ onClick, className = '', children, type = 'button', bgColor = 'primary', full = false, ...props }) => {
   let bgClassName = 'bg-primary'
   switch (bgColor) {
     case 'primary':
@@ -14,7 +14,7 @@ const Button = ({ onClick, className, children, type = 'button', bgColor = 'prim
       break
   }
   return (
-    <button type={type} onClick={onClick} className={`${full ? 'w-full' : 'w-auto'} px-6 py-3 mt-auto capitalize rounded-lg bg-primary ${bgClassName} ${className}`}>
+    <button type={type} onClick={onClick} className={`${full ? 'w-full' : 'w-auto'} px-6 py-3 mt-auto capitalize rounded-lg bg-primary ${bgClassName} ${className}`} {...props}>
       {children}
     </button>
   )

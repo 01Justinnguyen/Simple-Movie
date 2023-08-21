@@ -20,21 +20,11 @@ const MovieList = ({ type = 'now_playing' }) => {
       {isLoading && (
         <>
           <Swiper modules={[Navigation, Autoplay]} spaceBetween={50} slidesPerView={'auto'} navigation autoplay={{ delay: 2500, disableOnInteraction: false }}>
-            <SwiperSlide>
-              <MovieCardSkeleton />
-            </SwiperSlide>
-            <SwiperSlide>
-              <MovieCardSkeleton />
-            </SwiperSlide>
-            <SwiperSlide>
-              <MovieCardSkeleton />
-            </SwiperSlide>
-            <SwiperSlide>
-              <MovieCardSkeleton />
-            </SwiperSlide>
-            <SwiperSlide>
-              <MovieCardSkeleton />
-            </SwiperSlide>
+            {new Array(5).fill(0).map((item, id) => (
+              <SwiperSlide key={id}>
+                <MovieCardSkeleton />
+              </SwiperSlide>
+            ))}
           </Swiper>
         </>
       )}

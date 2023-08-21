@@ -4,6 +4,7 @@ import { fetcher, tmdbAPI } from 'src/apiConfig/config'
 import MovieCard from 'src/components/movie/MovieCard'
 import debounce from 'lodash.debounce'
 import ReactPaginate from 'react-paginate'
+import MovieCardSkeleton from 'src/components/loading/MovieCardSkeleton'
 const MoviesPage = () => {
   const [page, setPage] = useState(1)
   const [movies, setMovies] = useState([])
@@ -11,7 +12,8 @@ const MoviesPage = () => {
   const [inputValue, setInputValue] = useState('')
   // const [itemOffset, setItemOffset] = useState(0)
   const [url, setUrl] = useState(tmdbAPI.getTrendingMovies(page))
-  const { data } = useSWR(url, fetcher)
+  const { data, error } = useSWR(url, fetcher)
+  const isLoading = !data && !error
 
   useEffect(() => {
     if (data && data.results) setMovies(data?.results)
@@ -46,7 +48,16 @@ const MoviesPage = () => {
           </svg>
         </button>
       </div>
-      <div className="grid grid-cols-4 gap-10">{movies.length > 0 && movies.map((movie) => <MovieCard key={movie.id} item={movie}></MovieCard>)}</div>
+      {isLoading && (
+        <div className="grid grid-cols-4 gap-10">
+          {new Array(20).fill(0).map((item, id) => (
+            <MovieCardSkeleton key={id} />
+          ))}
+        </div>
+      )}
+
+      {!isLoading && <div className="grid grid-cols-4 gap-10">{movies.length > 0 && movies.map((movie) => <MovieCard key={movie.id} item={movie}></MovieCard>)}</div>}
+
       <div className="mt-10">
         <ReactPaginate
           breakLabel="..."

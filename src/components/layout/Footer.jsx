@@ -1,8 +1,8 @@
-import React from 'react'
+import {} from 'react'
 
 const Footer = () => {
   return (
-    <div className="mt-24 pt-20 border-t-2 pb-10">
+    <div className="pt-20 pb-10 mt-24 border-t-2">
       <footer className="grid grid-cols-4 gap-x-10">
         <div>
           <img src="iconpagemovie.svg" alt="" />

@@ -1,4 +1,4 @@
-import React from 'react'
+import {} from 'react'
 import useSWR from 'swr'
 import { fetcher, tmdbAPI } from 'src/apiConfig/config'
 import { SwiperSlide, Swiper } from 'swiper/react'
@@ -58,7 +58,7 @@ const MovieMeta = ({ movieId, type = 'videos' }) => {
     if (type === 'similar') {
       return (
         <div className="py-10">
-          <h2 className="text-3xl font-mediummb-10">Similar Movies</h2>
+          <h2 className="mb-2 text-3xl font-medium">Similar Movies</h2>
           <div className="movie-list">
             <Swiper modules={[Navigation, Autoplay]} spaceBetween={50} slidesPerView={'auto'} navigation autoplay={{ delay: 2500, disableOnInteraction: false }}>
               {results.length > 0 &&

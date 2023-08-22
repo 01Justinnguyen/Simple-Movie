@@ -5,7 +5,6 @@ import MovieCard from 'src/components/movie/MovieCard'
 import debounce from 'lodash.debounce'
 import ReactPaginate from 'react-paginate'
 import MovieCardSkeleton from 'src/components/loading/MovieCardSkeleton'
-import Button from 'src/components/button/Button'
 const MoviesPage = () => {
   const [page, setPage] = useState(1)
   const [movies, setMovies] = useState([])

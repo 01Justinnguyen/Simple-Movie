@@ -15,7 +15,6 @@ const MoviesPage = () => {
   const { data, error, size, setSize } = useSWRInfinite((index) => url.replace('page=1', `page=${index + 1}`), fetcher)
   const isEmpty = data?.[0]?.results.length === 0
   const isReachingEnd = isEmpty || (data && data[data.length - 1]?.results.length < itemsPerPage)
-  console.log('🚀 ~ file: MoviesPageV2.jsx:18 ~ MoviesPage ~ isReachingEnd:', isReachingEnd)
 
   //handle skeleton
   const isLoading = !data && !error
@@ -48,13 +47,13 @@ const MoviesPage = () => {
         </button>
       </div>
 
-      {/* {isLoading && (
+      {isLoading && (
         <div className="grid grid-cols-4 gap-10">
           {new Array(20).fill(0).map((item, id) => (
             <MovieCardSkeleton key={id} />
           ))}
         </div>
-      )} */}
+      )}
 
       {!isLoading && <div className="grid grid-cols-4 gap-10">{movies.length > 0 && movies.map((movie) => <MovieCard key={movie.id} item={movie}></MovieCard>)}</div>}
 

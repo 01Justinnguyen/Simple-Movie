@@ -1,4 +1,4 @@
-import React from 'react'
+import {} from 'react'
 
 const Button = ({ onClick, className = '', children, type = 'button', bgColor = 'primary', full = false, ...props }) => {
   let bgClassName = 'bg-primary'

@@ -1,5 +1,5 @@
 export const fetcher = (...args) => fetch(...args).then((res) => res.json())
-export const API_KEY = '5e6b78a5f9690b9cb75bb71bb40ab0b4'
+export const API_KEY = '223c47f9574e3779647798cf213e0074'
 const tmdbEndPoint = `https://api.themoviedb.org/3/movie`
 const tmdbImageEndPoint = `https://image.tmdb.org/t/p/original`
 

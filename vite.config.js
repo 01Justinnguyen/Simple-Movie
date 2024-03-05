@@ -7,7 +7,8 @@ export default defineConfig({
   server: {
     proxy: {
       '/pagead': 'https://googleads.g.doubleclick.net'
-    }
+    },
+    port: 8080
   },
   resolve: {
     alias: {

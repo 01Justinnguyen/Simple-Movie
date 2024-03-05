@@ -7,7 +7,7 @@ import { Pagination, Autoplay } from 'swiper/modules'
 import BannerSkeleton from 'src/components/loading/BannerSkeleton'
 const BannerList = () => {
   const [banners, setBanners] = useState([])
-  const { data, error } = useSWR('https://api.themoviedb.org/3/movie/upcoming?api_key=5e6b78a5f9690b9cb75bb71bb40ab0b4', fetcher)
+  const { data, error } = useSWR('https://api.themoviedb.org/3/movie/upcoming?api_key=223c47f9574e3779647798cf213e0074', fetcher)
   const isLoading = !data && !error
   useEffect(() => {
     if (data && data.results) setBanners(data?.results)
